@@ -23,7 +23,7 @@ CHECK_ROOT(){
 }
 
 VALIDATE(){
-    if [ $1 -ne o ]
+    if [ $1 -ne 0 ]
     then
         echo -e "$2 is $R failure $N " | tee -a $LOG_FILE
         exit 1
