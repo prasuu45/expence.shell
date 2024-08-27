@@ -25,14 +25,14 @@ CHECK_ROOT(){
 VALIDATE(){
     if [ $1 -ne o ]
     then
-        echo -e "$2 is $R failure $N " | tee -a &LOG_FILE
+        echo -e "$2 is $R failure $N " | tee -a $LOG_FILE
         exit 1
     else
         echo -e "$2 is $G success $N " | tee -a $LOG_FILE
     fi
 }
 
-echo "script started excuiting at: $(date)" | tee -a &LOG_FILE
+echo "script started excuiting at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
