@@ -36,22 +36,27 @@ echo "script started  excuiting at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-dnf install nginx -y 
+dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Install nginx"
 
-systemctl enable nginx
+systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "Enable nginx"
 
-systemctl start nginx
+systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Start nginx"
 
-rm -rf /usr/share/nginx/html/*
+rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
 VALIDATE $? "removing the default data"
 
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
 VALIDATE $? "doenload the frountend appliction code"
 
-cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+cd /usr/share/nginx/html &>>$LOG_FILE
+unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "unzip the code"
 
+cp /home/ec2-user/expence.shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOG_FILE
+VALIDATE $? "copy the code "
+
+systemctl restart nginx &>>$LOG_FILE
+VALIDATE $? "Restart the nginx"
