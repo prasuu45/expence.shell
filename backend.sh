@@ -24,10 +24,10 @@ CHECK_ROOT(){
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
-       echo -e "$2 is $R failure $N" | tee -a $LOG_FILE
+       echo -e "$2 is  $R failure $N " | tee -a $LOG_FILE
        exit 1
     else
-        echo -e "$2 is $G success $N" | tee -a $LOG_FILE
+        echo -e "$2 is $G success $N " | tee -a $LOG_FILE
     fi 
 }
 
@@ -51,35 +51,35 @@ then
     useradd expense
     VALIDATE $? "Add user expence"
 else
-    echo "expence user is already exists..$Y nothing to do $N"
+    echo -e "expence user is already exists..$Y nothing to do $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>LOG_FILE
 VALIDATE $? "Create /app folder"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-VALIDATE$? "download the application code"
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>LOG_FILE
+VALIDATE $? "download the application code"
 
-cd /app 
+cd /app  &>>LOG_FILE
 rm -rf /app * # remove the exiting code
 unzip /tmp/backend.zip
 VALIDATE $? "Extrating the code"
 
-npm install
+npm install &>>LOG_FILE
 VALIDATE $? "install npm"
 
-dnf install mysql -y
+dnf install mysql -y &>>LOG_FILE
 VALIDATE $? "install mysql clinet"
 
-mysql -h 172.31.32.52 -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h 172.31.32.52 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>LOG_FILE
 VALIDATE $? " schema loading"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>LOG_FILE
 VALIDATE $? "Reaload the daemon"
 
-systemctl enable backend
+systemctl enable backend &>>LOG_FILE
 VALIDATE $? "enable backend server"
 
-systemctl restart backend
+systemctl restart backend &>>LOG_FILE
 VALIDATE $? "start the backend server"
 
