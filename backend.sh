@@ -68,6 +68,7 @@ VALIDATE $? "Extracting backend application code"
 
 npm install &>>LOG_FILE
 cp /home/ec2-user/expence.shell/backend.service /etc/systemd/system/backend.service
+# pwb current adress the service script  and where we paste  service script  
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing MySQL Client"
