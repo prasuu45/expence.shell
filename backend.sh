@@ -69,14 +69,14 @@ VALIDATE $? "Extracting backend application code"
 npm install &>>LOG_FILE
 VALIDATE $? "install npm"
 
-dnf install mysql -y &>>LOG_FILE
-VALIDATE $? "install mysql clinet"
+dnf install mysql -y &>>$LOG_FILE
+VALIDATE $? "Installing MySQL Client"
 
-mysql -h 172.31.32.52 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>LOG_FILE
-VALIDATE $? " schema loading"
+mysql -h 172.31.32.52 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+VALIDATE $? "Schema loading"
 
-systemctl daemon-reload &>>LOG_FILE
-VALIDATE $? "Reaload the daemon"
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Daemon reload"
 
 systemctl enable backend &>>$LOG_FILE
 VALIDATE $? "Enabled backend"
