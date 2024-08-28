@@ -17,7 +17,7 @@ N="\e[0m"
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
     then
-        echo -e "$R please rn this script in root previleges $N" | tee -a &LOG_FILE
+        echo -e "$R please rn this script in root previleges $N" | tee -a $LOG_FILE
         exit 1
     fi
 }
