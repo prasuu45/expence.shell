@@ -8,10 +8,11 @@ mkdir -p $LOGS_FOLDER
 
 
 USERID=$(id -u)
-R="/e[31m"
-G="/e[32m"
-Y="/e[33m"
-N="/e[0m"
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
 
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
@@ -77,9 +78,8 @@ VALIDATE $? " schema loading"
 systemctl daemon-reload &>>LOG_FILE
 VALIDATE $? "Reaload the daemon"
 
-systemctl enable backend &>>LOG_FILE
-VALIDATE $? "enable backend server"
+systemctl enable backend &>>$LOG_FILE
+VALIDATE $? "Enabled backend"
 
-systemctl restart backend &>>LOG_FILE
-VALIDATE $? "start the backend server"
-
+systemctl restart backend &>>$LOG_FILE
+VALIDATE $? "Restarted Backend"
